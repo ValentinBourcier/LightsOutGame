@@ -1,22 +1,24 @@
 Class {
-	#name : #LOGame,
+	#name : #LightsOutGame,
 	#superclass : #Object,
 	#classInstVars : [
 		'pane'
 	],
-	#category : #'PBE-LightsOut'
+	#category : #LightsOutGame
 }
 
 { #category : #'instance creation' }
-LOGame class >> close [
-
+LightsOutGame class >> close [
+	<example>
 	pane ifNil: [ self error: 'Lights-out game not initialized.'].
-	pane delete.
+	pane close.
+	pane := nil.
 ]
 
 { #category : #'instance creation' }
-LOGame class >> open [
+LightsOutGame class >> open [
 
+	<example>
 	pane := pane ifNil: [ pane := LOPane new ].
 	pane openInWorld
 ]

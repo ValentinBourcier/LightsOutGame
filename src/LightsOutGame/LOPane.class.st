@@ -4,13 +4,20 @@ Class {
 	#instVars : [
 		'cells'
 	],
-	#category : #'PBE-LightsOut'
+	#category : #LightsOutGame
 }
 
 { #category : #initialization }
 LOPane >> cellsPerSide [
 	"The number of cells along each side of the game"
 	^ 10
+]
+
+{ #category : #'initialize-release' }
+LOPane >> close [
+
+	cells do: [ :c | self removeMorph: c. c delete].
+	self delete.
 ]
 
 { #category : #initialization }

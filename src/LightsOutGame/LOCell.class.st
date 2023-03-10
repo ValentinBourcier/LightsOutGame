@@ -31,7 +31,7 @@ Class {
 	#instVars : [
 		'mouseAction'
 	],
-	#category : #'PBE-LightsOut'
+	#category : #LightsOutGame
 }
 
 { #category : #initialization }
