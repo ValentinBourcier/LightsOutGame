@@ -7,6 +7,12 @@ Class {
 	#category : #LightsOutGame
 }
 
+{ #category : #accessing }
+LOPane >> cells [
+
+	^ cells
+]
+
 { #category : #initialization }
 LOPane >> cellsPerSide [
 	"The number of cells along each side of the game"
