@@ -57,5 +57,6 @@ LOPane >> toggleNeighboursOfCellAt: i at: j [
 	j > 1
 		ifTrue: [ (cells at: i at: j - 1) toggleState ].
 	j < self cellsPerSide
-		ifTrue: [ (cells at: i at: j + 1) toggleState ]
+		ifTrue: [ (cells at: i at: j + 1) toggleState ].
+	(cells at: i at: j) toggleState 
 ]
