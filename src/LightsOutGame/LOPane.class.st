@@ -26,8 +26,28 @@ LOPane >> initialize [
 		5 @ 5 extent: LOCell size @ LOCell size * self size + (2 * self borderWidth)
 	).
 	
-	cells := matrix indicesCollect: [ :i :j | self newCellAt: i at: j ].
+	cells := matrix indicesCollect: [ :x :y | self newCellAt: x @ y ].
 	
+]
+
+{ #category : #initialization }
+LOPane >> newCellAt: aPoint [
+	
+	"Create a cell for position (i,j) and add it to my on-screen representation at the appropriate
+	screen position. Answer the new cell"
+
+	| cell origin |
+
+	origin := self innerBounds origin.
+
+	cell := LOCell new 
+		position: (aPoint - 1) * LOCell size + origin;
+		mouseAction: [ self toggleCellAt: aPoint ]; 
+		yourself.
+	
+	self addMorph: cell.
+
+	^ cell
 ]
 
 { #category : #initialization }
