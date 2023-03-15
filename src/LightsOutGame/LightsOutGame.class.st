@@ -27,5 +27,5 @@ LightsOutGame class >> open [
 LightsOutGame class >> reset [
 
 	<example>
-	pane cells do: [ :c |  c turnOff ].
+	pane reset.
 ]

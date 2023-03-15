@@ -34,28 +34,46 @@ Class {
 	#category : #LightsOutGame
 }
 
+{ #category : #accessing }
+LOCell class >> size [ 
+
+	^ 50
+]
+
 { #category : #initialization }
 LOCell >> initialize [
 	super initialize.
+
 	self label: ''.
 	self borderWidth: 2.
-	bounds := 0 @ 0 corner: 50 @ 50.
-	offColor := Color paleYellow.
-	onColor := Color paleBlue darker.
 	self useSquareCorners.
+	bounds := 0 @ 0 corner: 50 @ 50.
+
+	offColor := (Color r: 210/255 g: 210/255 b: 210/255).
+	onColor := (Color r: 1.0 g: 215/255 b: 0.0).
 	self turnOff
 ]
 
-{ #category : #accessing }
+{ #category : #'event handling' }
 LOCell >> mouseAction: aBlock [
+
 	^ mouseAction := aBlock
 ]
 
 { #category : #'event handling' }
 LOCell >> mouseMove: anEvent [
+
+	"No action"
+]
+
+{ #category : #'event handling' }
+LOCell >> mouseUp: anEvent [
+
+	mouseAction value
 ]
 
 { #category : #accessing }
-LOCell >> mouseUp: anEvent [
-	mouseAction value
+LOCell >> switch: aColor [
+
+	self setSwitchState: aColor = offColor
 ]

@@ -7,19 +7,7 @@ Class {
 	#category : #LightsOutGame
 }
 
-{ #category : #accessing }
-LOPane >> cells [
-
-	^ cells
-]
-
-{ #category : #initialization }
-LOPane >> cellsPerSide [
-	"The number of cells along each side of the game"
-	^ 10
-]
-
-{ #category : #'initialize-release' }
+{ #category : #'opening/closing' }
 LOPane >> close [
 
 	cells do: [ :c | self removeMorph: c. c delete].
@@ -28,41 +16,69 @@ LOPane >> close [
 
 { #category : #initialization }
 LOPane >> initialize [
-	| sampleCell width height n matrix|
+	
+	| matrix |
+	
 	super initialize.
-	n := self cellsPerSide.
-	sampleCell := LOCell new.
-	width := sampleCell width.
-	height := sampleCell height.
-	self bounds: (5 @ 5 extent: (width * n) @ (height * n) + (2 * self borderWidth)).
-	matrix :=  Array2D rows: n columns: n.  
-	"cells := Matrix new: n tabulate: [ :i :j | self newCellAt: i at: j ]" "Pharo 5.0: Matrix new: 5 tabulate: [ :i :j | i asString, j asString  ] "
-	cells := matrix indicesCollect: [ :i :j | self newCellAt: i at: j].
+	matrix := Array2D rows: self size columns: self size.
+	
+	self bounds: (
+		5 @ 5 extent: LOCell size @ LOCell size * self size + (2 * self borderWidth)
+	).
+	
+	cells := matrix indicesCollect: [ :i :j | self newCellAt: i at: j ].
 	
 ]
 
 { #category : #initialization }
 LOPane >> newCellAt: i at: j [
-	"Create a cell for position (i,j) and add it to my on-screen representation at the appropriate screen position. Answer the new cell"
+	
+	"Create a cell for position (i,j) and add it to my on-screen representation at the appropriate
+	screen position. Answer the new cell"
 
-	| c origin |
-	c := LOCell new.
+	| cell origin |
+
 	origin := self innerBounds origin.
-	self addMorph: c.
-	c position: ((i - 1) * c width) @ ((j - 1) * c height) + origin.
-	c mouseAction: [ self toggleNeighboursOfCellAt: i at: j ].
-	^ c
+
+	cell := LOCell new.
+	cell position: ((i - 1) * cell width) @ ((j - 1) * cell height) + origin.
+	cell mouseAction: [ self toggleCellAt: i @ j ].
+	self addMorph: cell.
+
+	^ cell
+]
+
+{ #category : #'opening/closing' }
+LOPane >> reset [
+
+	cells do: [ :c | c turnOff ]
+]
+
+{ #category : #initialization }
+LOPane >> size [
+	"The number of cells along each side of the game"
+	^ 10
 ]
 
 { #category : #'game logic' }
-LOPane >> toggleNeighboursOfCellAt: i at: j [
-	i > 1
-		ifTrue: [ (cells at: i - 1 at: j) toggleState ].
-	i < self cellsPerSide
-		ifTrue: [ (cells at: i + 1 at: j) toggleState ].
-	j > 1
-		ifTrue: [ (cells at: i at: j - 1) toggleState ].
-	j < self cellsPerSide
-		ifTrue: [ (cells at: i at: j + 1) toggleState ].
-	(cells at: i at: j) toggleState 
+LOPane >> toggleCell: aCell [
+
+	aCell switch: aCell color
+]
+
+{ #category : #'game logic' }
+LOPane >> toggleCellAt: aPoint [
+
+	| x y |
+
+	x := aPoint x.
+	y := aPoint y.
+	
+	x > 1 ifTrue: [ self toggleCell: (cells at: x - 1 at: y) ].
+	y > 1 ifTrue: [ self toggleCell: (cells at: x at: y - 1) ].
+
+	x < self size ifTrue: [ self toggleCell: (cells at: x + 1 at: y) ].
+	y < self size ifTrue: [ self toggleCell: (cells at: x at: y + 1) ].
+	
+	self toggleCell: (cells at: x at: y)
 ]
