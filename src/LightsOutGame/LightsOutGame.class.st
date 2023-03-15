@@ -26,6 +26,5 @@ LightsOutGame class >> open [
 { #category : #initialization }
 LightsOutGame class >> reset [
 
-	<example>
 	pane reset.
 ]

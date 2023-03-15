@@ -7,6 +7,12 @@ Class {
 	#category : #LightsOutGame
 }
 
+{ #category : #initialization }
+LOPane class >> size [
+	"The number of cells along each side of the game"
+	^ 10
+]
+
 { #category : #'opening/closing' }
 LOPane >> close [
 
@@ -17,13 +23,15 @@ LOPane >> close [
 { #category : #initialization }
 LOPane >> initialize [
 	
-	| matrix |
+	| matrix size |
+	
+	size := self class size.
 	
 	super initialize.
-	matrix := Array2D rows: self size columns: self size.
+	matrix := Array2D rows: size columns: size.
 	
 	self bounds: (
-		5 @ 5 extent: LOCell size @ LOCell size * self size + (2 * self borderWidth)
+		5 @ 5 extent: LOCell size @ LOCell size * size + (2 * self borderWidth)
 	).
 	
 	cells := matrix indicesCollect: [ :x :y | self newCellAt: x @ y ].
@@ -74,12 +82,6 @@ LOPane >> reset [
 	cells do: [ :c | c turnOff ]
 ]
 
-{ #category : #initialization }
-LOPane >> size [
-	"The number of cells along each side of the game"
-	^ 10
-]
-
 { #category : #'game logic' }
 LOPane >> toggleCell: aCell [
 
@@ -97,8 +99,8 @@ LOPane >> toggleCellAt: aPoint [
 	x > 1 ifTrue: [ self toggleCell: (cells at: x - 1 at: y) ].
 	y > 1 ifTrue: [ self toggleCell: (cells at: x at: y - 1) ].
 
-	x < self size ifTrue: [ self toggleCell: (cells at: x + 1 at: y) ].
-	y < self size ifTrue: [ self toggleCell: (cells at: x at: y + 1) ].
+	x < LOPane size ifTrue: [ self toggleCell: (cells at: x + 1 at: y) ].
+	y < LOPane size ifTrue: [ self toggleCell: (cells at: x at: y + 1) ].
 	
 	self toggleCell: (cells at: x at: y)
 ]
