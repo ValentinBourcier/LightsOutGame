@@ -10,6 +10,7 @@ Class {
 { #category : #'instance creation' }
 LightsOutGame class >> close [
 
+	<example>
 	pane ifNil: [ self error: 'Lights-out game not initialized.'].
 	pane close.
 	pane := nil.
@@ -25,6 +26,7 @@ LightsOutGame class >> open [
 
 { #category : #initialization }
 LightsOutGame class >> reset [
-
+	
+	<example>
 	pane reset.
 ]
