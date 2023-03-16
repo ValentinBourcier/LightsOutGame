@@ -58,24 +58,6 @@ LOPane >> newCellAt: aPoint [
 	^ cell
 ]
 
-{ #category : #initialization }
-LOPane >> newCellAt: i at: j [
-	
-	"Create a cell for position (i,j) and add it to my on-screen representation at the appropriate
-	screen position. Answer the new cell"
-
-	| cell origin |
-
-	origin := self innerBounds origin.
-
-	cell := LOCell new.
-	cell position: ((i - 1) * cell width) @ ((j - 1) * cell height) + origin.
-	cell mouseAction: [ self toggleCellAt: i @ j ].
-	self addMorph: cell.
-
-	^ cell
-]
-
 { #category : #'opening/closing' }
 LOPane >> reset [
 
@@ -91,16 +73,17 @@ LOPane >> toggleCell: aCell [
 { #category : #'game logic' }
 LOPane >> toggleCellAt: aPoint [
 
-	| x y |
+	| x y size |
 
 	x := aPoint x.
 	y := aPoint y.
+	size := self class size.
 	
 	x > 1 ifTrue: [ self toggleCell: (cells at: x - 1 at: y) ].
 	y > 1 ifTrue: [ self toggleCell: (cells at: x at: y - 1) ].
 
-	x < LOPane size ifTrue: [ self toggleCell: (cells at: x + 1 at: y) ].
-	y < LOPane size ifTrue: [ self toggleCell: (cells at: x at: y + 1) ].
+	x < size ifTrue: [ self toggleCell: (cells at: x + 1 at: y) ].
+	y < size ifTrue: [ self toggleCell: (cells at: x at: y + 1) ].
 	
 	self toggleCell: (cells at: x at: y)
 ]
