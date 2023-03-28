@@ -10,7 +10,7 @@ Class {
 { #category : #'instance creation' }
 LightsOutGame class >> close [
 
-	<example>
+	<script: 'self close'>
 	pane ifNil: [ self error: 'Lights-out game not initialized.'].
 	pane close.
 	pane := nil.
@@ -19,7 +19,7 @@ LightsOutGame class >> close [
 { #category : #'instance creation' }
 LightsOutGame class >> open [
 
-	<example>
+	<script: 'self open'>
 	pane := pane ifNil: [ pane := LOPane new ].
 	pane openInWorld
 ]
@@ -27,6 +27,6 @@ LightsOutGame class >> open [
 { #category : #initialization }
 LightsOutGame class >> reset [
 	
-	<example>
+	<script: 'self reset'>
 	pane reset.
 ]

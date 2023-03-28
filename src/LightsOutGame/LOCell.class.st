@@ -69,7 +69,10 @@ LOCell >> mouseMove: anEvent [
 { #category : #'event handling' }
 LOCell >> mouseUp: anEvent [
 
-	mouseAction value
+	anEvent whichButton = MouseEvent yellowButton
+		ifTrue: [ self inspect ]
+		ifFalse: [ mouseAction value ]
+
 ]
 
 { #category : #accessing }
