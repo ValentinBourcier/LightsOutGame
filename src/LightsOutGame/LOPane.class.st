@@ -22,20 +22,23 @@ LOPane >> close [
 
 { #category : #initialization }
 LOPane >> initialize [
-	
-	| matrix size |
-	
+
+	| matrix size button |
 	size := self class size.
-	
+
 	super initialize.
+	self bounds: (30 @ 30 extent:
+			 LOCell size @ LOCell size * size + (2 * self borderWidth)
+			 + (0 @ 30)).
+
+	button := SimpleButtonMorph new label: 'Restart'.
+	button actionSelector: #restart.
+	button target: self.
+	button bounds: (30 @ 30 extent: 100 @ 30).
+	self addMorph: button.
+
 	matrix := Array2D rows: size columns: size.
-	
-	self bounds: (
-		5 @ 5 extent: LOCell size @ LOCell size * size + (2 * self borderWidth)
-	).
-	
-	cells := matrix indicesCollect: [ :x :y | self newCellAt: x @ y ].
-	
+	cells := matrix indicesCollect: [ :x :y | self newCellAt: x @ y ]
 ]
 
 { #category : #initialization }
@@ -46,7 +49,7 @@ LOPane >> newCellAt: aPoint [
 
 	| cell origin |
 
-	origin := self innerBounds origin.
+	origin := (self innerBounds origin) + (0@30).
 
 	cell := LOCell new 
 		position: (aPoint - 1) * LOCell size + origin;
@@ -62,6 +65,15 @@ LOPane >> newCellAt: aPoint [
 LOPane >> reset [
 
 	cells do: [ :c | c turnOff ]
+]
+
+{ #category : #actions }
+LOPane >> restart [
+
+	LightsOutGame
+		close;
+		reset;
+		open
 ]
 
 { #category : #'game logic' }

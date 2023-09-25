@@ -26,7 +26,7 @@ LightsOutGame class >> open [
 
 { #category : #initialization }
 LightsOutGame class >> reset [
-	
+
 	<script: 'self reset'>
-	pane reset.
+	pane ifNotNil: [ :p | p reset ]
 ]
