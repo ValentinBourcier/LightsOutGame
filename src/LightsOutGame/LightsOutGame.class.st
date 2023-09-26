@@ -30,3 +30,12 @@ LightsOutGame class >> reset [
 	<script: 'self reset'>
 	pane ifNotNil: [ :p | p reset ]
 ]
+
+{ #category : #starting }
+LightsOutGame class >> restart [
+
+	<script>
+	self
+		close;
+		open
+]

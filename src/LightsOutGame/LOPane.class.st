@@ -33,7 +33,7 @@ LOPane >> initialize [
 
 	button := SimpleButtonMorph new label: 'Restart'.
 	button actionSelector: #restart.
-	button target: self.
+	button target: LightsOutGame.
 	button bounds: (6 @ (LOCell size * size + 6) extent: 100 @ 30).
 	self addMorph: button.
 
@@ -65,15 +65,6 @@ LOPane >> newCellAt: aPoint [
 LOPane >> reset [
 
 	cells do: [ :c | c turnOff ]
-]
-
-{ #category : #actions }
-LOPane >> restart [
-
-	LightsOutGame
-		close;
-		reset;
-		open
 ]
 
 { #category : #'game logic' }
